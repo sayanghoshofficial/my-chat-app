@@ -1,9 +1,9 @@
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import React from 'react'
+
 
 const Home= ()=>{
     return (
-        <SignUp/>
+        <p>Home</p>
     )
 }
 
