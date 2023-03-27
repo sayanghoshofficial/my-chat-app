@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const SignUp = () => {
         position: "top-left",
       });
     }
-    if(password.length < 6){
+    if (password.length < 6) {
       return toast.warn("Password will be at least 6 letter...", {
         position: "top-left",
       });
@@ -53,7 +53,7 @@ const SignUp = () => {
               photoURL: downloadURL,
             });
 
-            await setDoc(doc(db,"userChats", res.user.uid),{});
+            await setDoc(doc(db, "userChats", res.user.uid), {});
             toast.success("Successfully Sign Up!....", {
               position: "top-left",
             });
@@ -75,7 +75,10 @@ const SignUp = () => {
         <form onSubmit={handleSubmit}>
           <input type="text" placeholder="Your Name..." />
           <input type="email" placeholder="Email..." />
-          <input type="password" placeholder="Password..." />
+          <input
+            type="password"
+            placeholder="Password...{use at least 6 letter}"
+          />
           <input type="password" placeholder="Confirm Password..." />
           <input type="file" id="file" />
           <label htmlFor="file">
@@ -86,10 +89,12 @@ const SignUp = () => {
             <span>Add an avatar</span>
           </label>
           <button>
-            Sign Up <ToastContainer theme="dark" />
+            Signup <ToastContainer theme="dark" />
           </button>
         </form>
-        <p>You do have an account? Login</p>
+        <p>
+          You do have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );

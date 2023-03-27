@@ -1,10 +1,13 @@
 import { signOut } from "firebase/auth";
-import React from "react";
+import React, { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../context/AuthContext";
 import { auth } from "../firebase";
 
 const Navbar = () => {
+  const {currentUser} =useContext(AuthContext);
+
   const onClickSignOut = () => {
     signOut(auth);
     return toast.success("Logout Successful!....", {
@@ -16,13 +19,14 @@ const Navbar = () => {
       <span className="logo">My Chat</span>
       <div className="user">
         <img
-          src="https://user-images.githubusercontent.com/99132893/227786098-2f48105b-2034-431c-96a4-065eab0f0e80.jpg"
+          src={currentUser.photoURL}
           alt="user"
         />
-        <span>Sayan</span>
+        <span>{currentUser.displayName}</span>
         <button onClick={onClickSignOut}>
           Logout <ToastContainer theme="dark" />
         </button>
+        
       </div>
     </div>
   );

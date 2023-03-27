@@ -1,24 +1,30 @@
 import React from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth, db, storage } from "../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const SignIn = () => {
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   toast.success("Successfully LogIn!...",{
+  //     position: "top-left"
+  //   });
+  // }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const email = e.target[0].value;
     const password = e.target[1].value;
-    
-    
+
     try {
+       await signInWithEmailAndPassword(auth, email, password);
       
+      navigate("/");
     } catch (err) {
       toast.error(err, {
         position: "top-left",
@@ -34,9 +40,14 @@ const SignIn = () => {
           <input type="email" placeholder="Email..." />
           <input type="password" placeholder="Password..." />
 
-          <button>Sign in</button>
+          <button>
+            Sign in
+            <ToastContainer theme="dark" />
+          </button>
         </form>
-        <p>You don't have an account? Signup</p>
+        <p>
+          You don't have an account? <Link to="/signup">Signup</Link>
+        </p>
       </div>
     </div>
   );
