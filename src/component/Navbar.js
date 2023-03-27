@@ -1,6 +1,16 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { auth } from "../firebase";
 
 const Navbar = () => {
+  const onClickSignOut = () => {
+    signOut(auth);
+    return toast.success("Logout Successful!....", {
+      position: "top-left",
+    });
+  };
   return (
     <div className="navbar">
       <span className="logo">My Chat</span>
@@ -10,7 +20,9 @@ const Navbar = () => {
           alt="user"
         />
         <span>Sayan</span>
-        <button>Logout</button>
+        <button onClick={onClickSignOut}>
+          Logout <ToastContainer theme="dark" />
+        </button>
       </div>
     </div>
   );
