@@ -7,12 +7,15 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
-const SignUp = () => {
-  const[submit,setSubmit] = useState(false);
-  const navigate = useNavigate();
-  
 
-  const handleSubmit =  (e) => {
+
+const SignUp = () => {
+  const[err, setErr] = useState(false);
+  const[loading,setLoading] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
     const displayName = e.target[0].value?.trim();
@@ -30,61 +33,57 @@ const SignUp = () => {
         position: "top-left",
       });
     }
-   
-      
-      let res = createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in 
-        
-        res = userCredential;
-        const storageRef = ref(storage, displayName);
+    try{
+      const res =  await createUserWithEmailAndPassword(auth, email, password);
+     
+        // Signed in
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
 
-        const uploadTask = uploadBytesResumable(storageRef, file);
-  
-        uploadTask.on(
-          (error) => {
-            toast.error(error, {
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            toast.success("Signup Successfully!...", {
               position: "top-left",
+              theme: "colored",
             });
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-              await updateProfile(res.user, {
-                displayName,
-                photoURL: downloadURL,
-              });
-              await setDoc(doc(db, "users", res.user.uid), {
-                uid: res.user.uid,
-                displayName,
-                email,
-                photoURL: downloadURL,
-              });
-  
-              await setDoc(doc(db, "userChats", res.user.uid), {});
-             
-              
-              setSubmit(false);
+            navigate("/");
+          } catch (err) {
+            toast.error(err, {
+              position: "top-left",
+              theme: "colored",
             });
+            setErr(true);
+            setLoading(false);
           }
-        );
-        toast.success('Sign up Successfull!...',{
-          position:"top-left",
-          theme:"colored"
-        })
-       navigate("/")
-      
-      })
-      .catch((error) => {
-       
-        const errorMessage = error.message;
-        toast.error(errorMessage, {
-          position: "top-left",
-          theme:"colored"
         });
-       
       });
-
+    } catch (err) {
+      toast.error(err, {
+        position: "top-left",
+        theme: "colored",
+      });
+      setErr(true);
+      setLoading(false);
+    }
   };
+
+       
   return (
     <div className="formContainer">
       <div className="formWrapper">
@@ -106,9 +105,7 @@ const SignUp = () => {
             />
             <span>Add an avatar</span>
           </label>
-          <button disabled={submit}>
-           { submit?"Signingup":"Signup" }
-          </button>
+          <button disabled={submit}>{submit ? "Signingup" : "Signup"}</button>
         </form>
         <p>
           You do have an account? <Link to="/login">Login</Link>

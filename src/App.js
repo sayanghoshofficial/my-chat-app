@@ -1,9 +1,9 @@
-import { Home, SignIn, SignUp } from "./pages";
+import { Home, SignIn, SignUp, Settings } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./Styles/style.scss";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import Settings from "./pages/Settings";
+
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <ToastContainer/>
+        <ToastContainer />
         <Routes>
           <Route path="/">
             <Route
@@ -31,7 +31,7 @@ function App() {
             />
             <Route path="login" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
-            <Route path="settings" element={<Settings/>}/>
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Routes>
       </BrowserRouter>

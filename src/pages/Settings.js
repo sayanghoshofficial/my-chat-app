@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth, db, storage } from "../firebase";
+import { db, storage } from "../firebase";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-import { getDatabase, ref, set } from "firebase/database";
+
+import { ref, set } from "firebase/database";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -13,7 +13,9 @@ const Settings = () => {
   const [submit, setSubmit] = useState(false);
   const [img, setImg] = useState(null);
   const navigate = useNavigate();
-  const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+  const defaultImageUrl =
+    "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   console.log(currentUser.auth);
 
@@ -35,38 +37,47 @@ const Settings = () => {
         position: "top-left",
       });
     }
+    function writeUserData(userId, name, email, imageUrl) {
+      set(ref(db, "users/" + userId), {
+        displayName: name,
+        email: email,
+        photoURL: imageUrl,
+      });
+    }
     if (img) {
-        // const res = await createUserWithEmailAndPassword(auth, email, password);
-        const storageRef = ref(storage, displayName);
-        const uploadTask = uploadBytesResumable(storageRef, img);
-        // uploadTask.on(
-        //     (error) => {
-        //       toast.error(error, {
-        //         position: "top-left",
-        //       });
-        //     },
-        //     () => {
-        //       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        //         await updateProfile(res.user, {
-        //           displayName,
-        //           photoURL: downloadURL,
-        //         });
-        //         await setDoc(doc(db, "users", res.user.uid), {
-        //           uid: res.user.uid,
-        //           displayName,
-        //           email,
-        //           photoURL: downloadURL,
-        //         });
-        //         // writeUserData(res.user.uid,displayName,email,downloadURL);
-                
-        //         toast.success("Successfully Updated!....", {
-        //           position: "top-left",
-        //         });
-        //         // navigate("/");
-        //         setSubmit(false);
-        //       });
-        //     }
-        //   );
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            writeUserData(currentUser.uid, displayName, email, downloadURL);
+            toast.success("Profile Updated....", {
+              position: "top-left",
+              theme: "colored",
+            });
+            navigate("/");
+          } catch (err) {
+            toast.error(err, {
+              position: "top-left",
+              theme: "colored",
+            });
+          }
+        });
+      });
+    } else {
+      try {
+        writeUserData(currentUser.uid, displayName, email, defaultImageUrl);
+        toast.success("Profile Updated with out image....", {
+          position: "top-left",
+          theme: "colored",
+        });
+        navigate("/");
+      } catch (err) {
+        toast.success(err, {
+          position: "top-left",
+          theme: "colored",
+        });
+      }
     }
   };
   return (
