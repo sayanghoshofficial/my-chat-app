@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -12,7 +12,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     setSubmit(true);
     const displayName = e.target[0].value?.trim();
@@ -30,46 +30,60 @@ const SignUp = () => {
         position: "top-left",
       });
     }
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+   
+      
+      let res = createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        
+        res = userCredential;
+        const storageRef = ref(storage, displayName);
 
-      const storageRef = ref(storage, displayName);
-
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        (error) => {
-          toast.error(error, {
-            position: "top-left",
-          });
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            toast.success("Successfully Sign Up!....", {
+        const uploadTask = uploadBytesResumable(storageRef, file);
+  
+        uploadTask.on(
+          (error) => {
+            toast.error(error, {
               position: "top-left",
             });
-            navigate("/");
-            setSubmit(false);
-          });
-        }
-      );
-    } catch (err) {
-      toast.error(err, {
-        position: "top-left",
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+              });
+  
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+             
+              
+              setSubmit(false);
+            });
+          }
+        );
+        toast.success('Sign up Successfull!...',{
+          position:"top-left",
+          theme:"colored"
+        })
+       navigate("/")
+      
+      })
+      .catch((error) => {
+       
+        const errorMessage = error.message;
+        toast.error(errorMessage, {
+          position: "top-left",
+          theme:"colored"
+        });
+       
       });
-    }
+
   };
   return (
     <div className="formContainer">

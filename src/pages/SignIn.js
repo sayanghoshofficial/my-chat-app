@@ -31,38 +31,11 @@ const SignIn = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        toast.warn(errorMessage, {
+        toast.error(errorMessage, {
                 position: "top-left",
                 theme: "colored",
               });
       });
-      
-      // handleNavigate();
-      // if (res) {
-      //   console.log(res);
-      //   if(res.UserCredentialImpl){
-      //     toast.success("Successfully LogIn!...", {
-      //       position: "top-left",
-      //       theme: "colored",
-      //     });
-      //     navigate("/");
-      //   }else {
-      //     toast.warn("Wrong email or password!...", {
-      //       position: "top-left",
-      //       theme: "colored",
-      //     });
-      //   }
-        
-        // setTimeout(handleNavigate, 1000);
-       
-        
-      // } 
-      //  res();
-    // } catch (err) {
-    //   toast.error(err, {
-    //     position: "top-left",
-    //   });
-    // }
   };
   return (
     <div className="formContainer">
