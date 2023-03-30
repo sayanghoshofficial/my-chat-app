@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,14 +8,17 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
+  const[submit,setSubmit] = useState(false);
   const navigate = useNavigate();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
-    const confirmPassword = e.target[3].value;
+    setSubmit(true);
+    const displayName = e.target[0].value?.trim();
+    const email = e.target[1].value?.trim();
+    const password = e.target[2].value?.trim();
+    const confirmPassword = e.target[3].value?.trim();
     const file = e.target[4].files[0];
     if (password !== confirmPassword) {
       return toast.warn("Password and confirmPassword not matched!....", {
@@ -58,6 +61,7 @@ const SignUp = () => {
               position: "top-left",
             });
             navigate("/");
+            setSubmit(false);
           });
         }
       );
@@ -88,8 +92,8 @@ const SignUp = () => {
             />
             <span>Add an avatar</span>
           </label>
-          <button>
-            Signup <ToastContainer theme="dark" />
+          <button disabled={submit}>
+           { submit?"Signingup":"Signup" }
           </button>
         </form>
         <p>

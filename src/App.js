@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./Styles/style.scss";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Settings from "./pages/Settings";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -16,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <ToastContainer/>
         <Routes>
           <Route path="/">
             <Route
@@ -28,6 +31,7 @@ function App() {
             />
             <Route path="login" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="settings" element={<Settings/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

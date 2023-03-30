@@ -1,6 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -9,27 +8,61 @@ import { auth } from "../firebase";
 const SignIn = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   toast.success("Successfully LogIn!...",{
-  //     position: "top-left"
-  //   });
-  // }, []);
+  
+  
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =(e) => {
     e.preventDefault();
 
     const email = e.target[0].value;
     const password = e.target[1].value;
 
-    try {
-       await signInWithEmailAndPassword(auth, email, password);
-      
-      navigate("/");
-    } catch (err) {
-      toast.error(err, {
-        position: "top-left",
+    // try {
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        
+        toast.success("Successfully LogIn!...", {
+                position: "top-left",
+                theme: "colored",
+              });
+        
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.warn(errorMessage, {
+                position: "top-left",
+                theme: "colored",
+              });
       });
-    }
+      
+      // handleNavigate();
+      // if (res) {
+      //   console.log(res);
+      //   if(res.UserCredentialImpl){
+      //     toast.success("Successfully LogIn!...", {
+      //       position: "top-left",
+      //       theme: "colored",
+      //     });
+      //     navigate("/");
+      //   }else {
+      //     toast.warn("Wrong email or password!...", {
+      //       position: "top-left",
+      //       theme: "colored",
+      //     });
+      //   }
+        
+        // setTimeout(handleNavigate, 1000);
+       
+        
+      // } 
+      //  res();
+    // } catch (err) {
+    //   toast.error(err, {
+    //     position: "top-left",
+    //   });
+    // }
   };
   return (
     <div className="formContainer">
@@ -42,7 +75,6 @@ const SignIn = () => {
 
           <button>
             Sign in
-            <ToastContainer theme="dark" />
           </button>
         </form>
         <p>

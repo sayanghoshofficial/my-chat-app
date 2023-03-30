@@ -127,6 +127,10 @@
         .user {
           display: flex;
           gap: 10px;
+          a{
+            text-decoration: none;
+            color: white;
+          }
           img {
             background-color: #ddddf7;
             height: 24px;
