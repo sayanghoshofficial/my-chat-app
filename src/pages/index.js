@@ -4,4 +4,5 @@ import SignUp from "./SignUp";
 import Settings from "./Settings";
 
 
-export {Home,SignIn,SignUp,Settings};
+
+export {Home,SignIn,SignUp,Settings}

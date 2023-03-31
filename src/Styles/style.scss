@@ -14,15 +14,16 @@
   }
 }
 
-.formContainer {
-  background-color: #a7bcff;
+.formContainer { 
+  background-image: linear-gradient(140deg, blue, #b71717);
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4));
 
   .formWrapper {
-    background-color: #ffffff;
+    background-color: #7a0505;
     padding: 20px 60px;
     border-radius: 10px;
     display: flex;
@@ -30,13 +31,12 @@
     gap: 10px;
     align-items: center;
     .logo {
-      color: #5d5b8d;
+      color: #cccbdf;
       font-weight: bold;
       font-size: 24px;
-      
     }
     .title {
-      color: #5d5b8d;
+      color: #cccbdf;
       font-size: 15px;
     }
     form {
@@ -47,19 +47,22 @@
       input {
         width: 250px;
         padding: 15px;
+        color: white;
         border: none;
         outline: none;
+        background-color: transparent;
         border-bottom: 1px solid #a7bcff;
 
         &::placeholder {
           color: rgb(175, 175, 175);
         }
       }
+     
       label {
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #8da4f1;
+        color: #cccbdf;
         font-size: 13px;
         cursor: pointer;
         img {
@@ -67,8 +70,9 @@
         }
       }
       button {
-        background-color: #7b96ec;
+        background-color: #4d0606;
         color: #ffffff;
+        border-radius: 15px;
         padding: 10px;
         font-weight: bold;
         border: none;
@@ -79,40 +83,48 @@
       }
     }
     p {
-      color: #5d5b8d;
+      color: #cccbdf;
       font-size: 12px;
       margin-top: 10px;
+      a{
+        color:#8286ff;
+      }
     }
   }
 }
 
 .home {
   background-color: #a7bcff;
+  background-image: linear-gradient(140deg, blue, #b71717);
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   .container {
-    border: 1px solid white;
     border-radius: 10px;
     width: 65%;
     height: 80%;
     display: flex;
     overflow: hidden;
-    @include tablet{
+    -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4));
+    @include tablet {
       width: 90%;
+    }
+    @include mobile {
+      width: 100%;
+      min-width: 400px;
     }
     .sidebar {
       flex: 1;
-      background-color: #3e3c61;
-      @include tablet{
+      background-color: #613c3c;
+      @include tablet {
         position: relative;
       }
 
       .navbar {
         display: flex;
         align-items: center;
-        background-color: #2f2d52;
+        background-color: #522d2d;
         height: 50px;
         padding: 10px;
         justify-content: space-between;
@@ -120,32 +132,34 @@
 
         .logo {
           font-weight: bold;
-          @include tablet{
+          @include tablet {
             display: none;
           }
         }
         .user {
           display: flex;
           gap: 10px;
-          a{
+          align-items: center;
+          a {
             text-decoration: none;
             color: white;
           }
           img {
             background-color: #ddddf7;
-            height: 24px;
-            width: 24px;
+            height: 50px;
+            width: 50px;
             border-radius: 50%;
             object-fit: cover;
           }
           button {
-            background-color: #5d5b8d;
+            background-color: #8d5b5b;
             color: #ddddf7;
+            border-radius: 5px;
             font-size: 10px;
             height: 20px;
             border: none;
             cursor: pointer;
-            @include tablet{
+            @include tablet {
               position: absolute;
               bottom: 10px;
             }
@@ -170,7 +184,8 @@
         }
       }
       .chats {
-        overflow: scroll;
+        overflow-y: scroll;
+        height: 61vh;
         &::-webkit-scrollbar {
           display: none;
         }
@@ -184,11 +199,11 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #2f2d52;
+          background-color: #522d2d;
         }
         img {
-          width: 50px;
-          height: 50px;
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -208,7 +223,7 @@
       flex: 2;
       .chatInfo {
         height: 50px;
-        background-color: #5d5b8d;
+        background-color: #8d5b5b;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -266,7 +281,6 @@
               width: 60%;
               height: 60%;
               border-radius: 10px 0px 10px 10px;
-              
             }
           }
           &.owner {
@@ -276,7 +290,7 @@
               align-items: flex-end;
             }
             p {
-              background-color: #8da4f1;
+              background-color: #c73f3f;
               color: white;
               border-radius: 10px 0px 10px 10px;
             }
@@ -310,8 +324,9 @@
           button {
             border: none;
             padding: 10px 15px;
+            border-radius: 10px;
             color: white;
-            background-color: #8da4f1;
+            background-color: #a90101;
             cursor: pointer;
           }
           label {

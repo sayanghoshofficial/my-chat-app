@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db, storage } from "../firebase";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
 import { ref, set } from "firebase/database";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+
 
 const Settings = () => {
   const [submit, setSubmit] = useState(false);
@@ -17,28 +16,22 @@ const Settings = () => {
   const defaultImageUrl =
     "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
-  console.log(currentUser.auth);
+    
+
+
+  console.log(currentUser.displayName );
+  
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     setSubmit(true);
     const displayName = e.target[0].value?.trim();
     const email = e.target[1].value?.trim();
-    const password = e.target[2].value?.trim();
-    const confirmPassword = e.target[3].value?.trim();
-    const file = e.target[4].files[0];
-    if (password !== confirmPassword) {
-      return toast.warn("Password and confirmPassword not matched!....", {
-        position: "top-left",
-      });
-    }
-    if (password.length < 6) {
-      return toast.warn("Password will be at least 6 letter...", {
-        position: "top-left",
-      });
-    }
+    const file = e.target[2].files[0];
+    
     function writeUserData(userId, name, email, imageUrl) {
-      set(ref(db, "users/" + userId), {
+      console.log('write user data')
+      set(ref(db, "users" + userId), {
         displayName: name,
         email: email,
         photoURL: imageUrl,
@@ -86,13 +79,9 @@ const Settings = () => {
         <span className="logo">My Chat</span>
         <span className="title">Update Profile</span>
         <form onSubmit={handleUpdate}>
-          <input type="text" placeholder="Your Name..." />
-          <input type="email" placeholder="Email..." />
-          <input
-            type="password"
-            placeholder="Password...{use at least 6 letter}"
-          />
-          <input type="password" placeholder="Confirm Password..." />
+          <input type="text" placeholder="Change Your Name..." defaultValue={currentUser.displayName}/>
+          <input type="email" placeholder="Change Email..." defaultValue={currentUser.email}/>
+          
           <input type="file" id="file" />
           <label htmlFor="file" onChange={(e) => setImg(e.target.files[0])}>
             <img

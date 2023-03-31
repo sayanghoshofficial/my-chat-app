@@ -34,6 +34,7 @@ const SignUp = () => {
       });
     }
     try{
+      setLoading(true);
       const res =  await createUserWithEmailAndPassword(auth, email, password);
      
         // Signed in
@@ -63,6 +64,7 @@ const SignUp = () => {
               theme: "colored",
             });
             navigate("/");
+            setLoading(false);
           } catch (err) {
             toast.error(err, {
               position: "top-left",
@@ -82,7 +84,13 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-
+if(loading){
+  return(
+    <div className="loaderWapper">
+        <div className="loader"></div>
+      </div>
+  )
+}
        
   return (
     <div className="formContainer">
@@ -94,7 +102,7 @@ const SignUp = () => {
           <input type="email" placeholder="Email..." />
           <input
             type="password"
-            placeholder="Password...{use at least 6 letter}"
+            placeholder="Password...(use at least 6 letter)"
           />
           <input type="password" placeholder="Confirm Password..." />
           <input type="file" id="file" />

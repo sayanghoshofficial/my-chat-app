@@ -20,6 +20,11 @@ const Input = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  const keyUpHandler = (e) => {
+    console.log('on key up handler')
+    e.code === "Enter" && handledSendMessage();
+  };
+
   const handledSendMessage = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
@@ -81,20 +86,23 @@ const Input = () => {
         value={text}
       />
       <div className="send">
-        <i className="fa-solid fa-paperclip"></i>
+       
         <input
           type="file"
           style={{ display: "none" }}
           id="file"
           onChange={(e) => setImg(e.target.files[0])}
         />
+         <i className="fa-solid fa-paperclip" htmlFor="file"></i>
         <label htmlFor="file">
           <img
             src="https://cdn-icons-png.flaticon.com/512/6631/6631821.png"
             alt="img-logo"
           />
         </label>
-        <button onClick={handledSendMessage}>Send</button>
+        <button onClick={handledSendMessage}  onKeyDown={keyUpHandler}>
+          Send
+        </button>
       </div>
     </div>
   );
