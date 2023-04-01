@@ -15,9 +15,9 @@ const SignIn = () => {
     const email = e.target[0].value;
     const password = e.target[1].value;
 
-    // try {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const user = userCredential.user;
         toast.success("Successfully LogIn!...", {
           position: "top-left",
           theme: "colored",
@@ -27,7 +27,6 @@ const SignIn = () => {
         setLoading(false);
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorMessage, {
           position: "top-left",
