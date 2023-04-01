@@ -1,5 +1,4 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import { data } from "jquery";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
