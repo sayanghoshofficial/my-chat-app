@@ -9,14 +9,16 @@ import { ChatContext } from "../context/ChatContext";
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
-  const { data, setData } = useContext(ChatContext);
+  const { dispatch } = useContext(ChatContext);
+
+  const clearSelectChat = (user) => {
+    dispatch({ type: "NULL_USER", payload: user });
+  };
 
   const onClickSignOut = () => {
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
-        // window.location.reload();
-        setData({ chatId: "null", user: {} });
+        clearSelectChat(currentUser);
         toast.success("Logout Successful!....", {
           position: "top-left",
           theme: "colored",
@@ -38,11 +40,11 @@ const Navbar = () => {
       <span className="logo">My Chat</span>
 
       <div className="user">
-        <Link to={"/settings"}>
+        <Link to={"/profile"}>
           <img src={currentUser.photoURL} alt="user" />
         </Link>
 
-        <Link to={"/settings"}>
+        <Link to={"/profile"}>
           <span>{currentUser.displayName}</span>
         </Link>
 

@@ -1,4 +1,4 @@
-import { Home, SignIn, SignUp, Settings} from "./pages";
+import { Home, SignIn, SignUp, Settings, Profile} from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./Styles/style.scss";
 import { useContext } from "react";
@@ -30,7 +30,7 @@ function App() {
             />
             <Route path="login" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
-            <Route path="settings" element={<Settings />} />
+            <Route path="profile" element={<Profile />} />
             
           </Route>
         </Routes>

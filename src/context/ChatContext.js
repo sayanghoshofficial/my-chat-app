@@ -1,8 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-} from "react";
+import { createContext, useContext, useReducer } from "react";
 
 import { AuthContext } from "./AuthContext";
 
@@ -24,6 +20,11 @@ export const ChatContextprovider = ({ children }) => {
             currentUser.uid > action.payload.uid
               ? currentUser.uid + action.payload.uid
               : action.payload.uid + currentUser.uid,
+        };
+      case "NULL_USER":
+        return {
+          chatId: "null",
+          user: {},
         };
       default:
         return state;
