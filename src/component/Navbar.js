@@ -31,9 +31,6 @@ const Navbar = () => {
           theme: "colored",
         });
       });
-    // localStorage.clear();
-    // sessionStorage.clear();
-    // window.location.reload();
   };
   return (
     <div className="navbar">
@@ -48,7 +45,9 @@ const Navbar = () => {
           <span>{currentUser.displayName}</span>
         </Link>
 
-        <button onClick={onClickSignOut}>Logout</button>
+        <button  onClick={onClickSignOut}>
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </div>
   );
