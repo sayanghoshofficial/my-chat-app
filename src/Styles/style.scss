@@ -13,9 +13,7 @@
     @content;
   }
 }
-.profileCointainer{
-  
-}
+
 
 .formContainer{ 
   background-image: linear-gradient(140deg, blue, #b71717);
@@ -27,12 +25,18 @@
 
   .formWrapper {
     background-color: #7a0505;
+    color: white;
     padding: 20px 60px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
+    img{
+      width:200px;
+      height: 200px;
+      border-radius: 50%;
+    }
     .logo {
       color: #cccbdf;
       font-weight: bold;
