@@ -45,7 +45,7 @@ const Profile = () => {
         <button 
         onClick={onClickSignOut}
         >
-            <i class="fa-solid fa-right-from-bracket"></i>
+            <i className="fa-solid fa-right-from-bracket"></i>
             Logout</button>
         <p>
           Go to Home page? <Link to="/">Home</Link>

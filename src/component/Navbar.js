@@ -46,7 +46,7 @@ const Navbar = () => {
         </Link>
 
         <button  onClick={onClickSignOut}>
-          <i class="fa-solid fa-right-from-bracket"></i>
+          <i className="fa-solid fa-right-from-bracket"></i>
         </button>
       </div>
     </div>
