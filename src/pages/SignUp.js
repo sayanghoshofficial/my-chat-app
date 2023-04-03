@@ -7,13 +7,13 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
-
-
 const SignUp = () => {
-  const[err, setErr] = useState(false);
-  const[loading,setLoading] = useState(false);
+  const [err, setErr] = useState(false);
+  const [img, setImg] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
+  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const SignUp = () => {
     const email = e.target[1].value?.trim();
     const password = e.target[2].value?.trim();
     const confirmPassword = e.target[3].value?.trim();
-    const file = e.target[4].files[0];
+    // const file = e.target[4].files[0];
     if (password !== confirmPassword) {
       return toast.warn("Password and confirmPassword not matched!....", {
         position: "top-left",
@@ -33,48 +33,81 @@ const SignUp = () => {
         position: "top-left",
       });
     }
-    try{
+    try {
       setLoading(true);
-      const res =  await createUserWithEmailAndPassword(auth, email, password);
-     
-        // Signed in
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            //Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            //create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
+      if (img) {
+        const date = new Date().getTime();
+        const storageRef = ref(storage, `${displayName + date}`);
 
-            //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            toast.success("Signup Successfully!...", {
-              position: "top-left",
-              theme: "colored",
-            });
-            navigate("/");
-            setLoading(false);
-          } catch (err) {
-            toast.error(err, {
-              position: "top-left",
-              theme: "colored",
-            });
-            setErr(true);
-            setLoading(false);
-          }
+        await uploadBytesResumable(storageRef, img).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              //Update profile
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              //create user on firestore
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+              });
+
+              //create empty user chats on firestore
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+              toast.success("Signup Successfully!...", {
+                position: "top-left",
+                theme: "colored",
+              });
+              navigate("/");
+              setLoading(false);
+            } catch (err) {
+              toast.error(err, {
+                position: "top-left",
+                theme: "colored",
+              });
+              setErr(true);
+              setLoading(false);
+            }
+            // Signed in
+          });
         });
-      });
+      }else{
+        try {
+          //Update profile
+          await updateProfile(res.user, {
+            displayName,
+            photoURL: defaultURL,
+          });
+          //create user on firestore
+          await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            displayName,
+            email,
+            photoURL: defaultURL,
+          });
+
+          //create empty user chats on firestore
+          await setDoc(doc(db, "userChats", res.user.uid), {});
+          toast.success("Signup Successfully!...", {
+            position: "top-left",
+            theme: "colored",
+          });
+          navigate("/");
+          setLoading(false);
+        } catch (err) {
+          toast.error(err, {
+            position: "top-left",
+            theme: "colored",
+          });
+          setErr(true);
+          setLoading(false);
+        }
+      }
     } catch (err) {
       toast.error(err, {
         position: "top-left",
@@ -84,14 +117,14 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-if(loading){
-  return(
-    <div className="loaderWapper">
+  if (loading) {
+    return (
+      <div className="loaderWapper">
         <div className="loader"></div>
       </div>
-  )
-}
-       
+    );
+  }
+
   return (
     <div className="formContainer">
       <div className="formWrapper">
@@ -105,7 +138,11 @@ if(loading){
             placeholder="Password...(use at least 6 letter)"
           />
           <input type="password" placeholder="Confirm Password..." />
-          <input type="file" id="file" />
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setImg(e.target.files[0])}
+          />
           <label htmlFor="file">
             <img
               src="https://cdn-icons-png.flaticon.com/512/6631/6631821.png"
