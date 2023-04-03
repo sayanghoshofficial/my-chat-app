@@ -12,6 +12,7 @@ import { ChatContext } from "../context/ChatContext";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase";
+import { toast } from "react-toastify";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -32,9 +33,10 @@ const Input = () => {
       const uploadTask = uploadBytesResumable(storageRef, img);
       uploadTask.on(
         (error) => {
-          // toast.error(error, {
-          //   position: "top-left",
-          // });
+          toast.error(error, {
+            position: "top-left",
+            theme: "colored",
+          });
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {

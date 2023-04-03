@@ -1,4 +1,4 @@
-import { Home, SignIn, SignUp, Settings, Profile, NotFound } from "./pages";
+import { Home, SignIn, SignUp,Profile, NotFound } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./Styles/style.scss";
 import { useContext } from "react";

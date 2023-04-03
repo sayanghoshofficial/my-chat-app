@@ -17,6 +17,7 @@ const Search = () => {
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
+  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const { currentUser } = useContext(AuthContext);
 
@@ -44,10 +45,11 @@ const Search = () => {
     const combineId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid
+        : user.uid + currentUser.uid;
 
     try {
       const res = await getDoc(doc(db, "chats", combineId));
+      console.log(res);
 
       if (!res.exists()) {
         //Create user chats collections
@@ -58,7 +60,7 @@ const Search = () => {
           [combineId + ".userInfo"]: {
             uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL,
+            photoURL: user.photoURL ? user.photoURL : defaultURL,
           },
           [combineId + ".date"]: serverTimestamp(),
         });
@@ -67,7 +69,7 @@ const Search = () => {
           [combineId + ".userInfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
+            photoURL: currentUser.photoURL ? currentUser.photoURL : defaultURL,
           },
           [combineId + ".date"]: serverTimestamp(),
         });
@@ -93,7 +95,10 @@ const Search = () => {
       {err && <span>User not found</span>}
       {user && (
         <div className="userChat" onClick={handledSelectChat}>
-          <img src={user.photoURL} alt="user-chat" />
+          <img
+            src={user.photoURL ? user.photoURL : defaultURL}
+            alt="user-chat"
+          />
           <div className="userChatinfo">
             <span>{user.displayName}</span>
           </div>

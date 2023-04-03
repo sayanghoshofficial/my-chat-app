@@ -6,6 +6,7 @@ import { db } from "../firebase";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
+  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
@@ -36,7 +37,14 @@ const Chats = () => {
             key={chat[0]}
             onClick={() => handledSelectChat(chat[1].userInfo)}
           >
-            <img src={chat[1].userInfo.photoURL} alt="user-chat" />
+            <img
+              src={
+                chat[1].userInfo.photoURL
+                  ? chat[1].userInfo.photoURL
+                  : defaultURL
+              }
+              alt="user-chat"
+            />
             <div className="userChatinfo">
               <span>{chat[1].userInfo.displayName}</span>
               <p>{chat[1].lastMessage?.text}</p>

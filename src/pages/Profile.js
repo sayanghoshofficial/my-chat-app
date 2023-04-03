@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const clearSelectChat = (user) => {
     dispatch({ type: "NULL_USER", payload: user });
@@ -32,21 +33,22 @@ const Profile = () => {
         });
       });
   };
-  
+
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <img className="profileImg"
-          src={currentUser.photoURL}
+        <span className="logo">My Chat</span>
+        <img
+          className="profileImg"
+          src={currentUser.photoURL ? currentUser.photoURL : defaultURL}
           alt="user"
         />
         <h5>{currentUser.displayName}</h5>
         <h6>{currentUser.email}</h6>
-        <button 
-        onClick={onClickSignOut}
-        >
-            <i className="fa-solid fa-right-from-bracket"></i>
-            Logout</button>
+        <button onClick={onClickSignOut}>
+          <i className="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </button>
         <p>
           Go to Home page? <Link to="/">Home</Link>
         </p>
