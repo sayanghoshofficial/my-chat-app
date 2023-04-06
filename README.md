@@ -3,6 +3,9 @@
 This is the Hosting Page [My Chat App](https://sayanghoshofficial.github.io/my-chat-app)
 ![Sign In](https://user-images.githubusercontent.com/99132893/230254548-21bb2531-8f32-4c6f-8b28-5fff369b4d2e.jpg)
 ![Sign up](https://user-images.githubusercontent.com/99132893/230254707-b0c524db-ac22-41f7-8e66-f53965d840c7.jpg)
+![Home](https://user-images.githubusercontent.com/99132893/230262810-3696506e-92ad-474a-8893-de2df2b9b0ac.jpg)
+![Profile](https://user-images.githubusercontent.com/99132893/230262902-3a840b6b-b3d6-4471-93ae-db3b2c20d95b.jpg)
+![Page Not Found](https://user-images.githubusercontent.com/99132893/230263073-c13f2a87-149a-48b1-acee-a9a3b210d0ba.jpg)
 
 
 # Getting Started with Create React App
