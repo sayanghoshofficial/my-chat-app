@@ -3,23 +3,55 @@
 This is the Hosting Page [My Chat App](https://sayanghoshofficial.github.io/my-chat-app)
 
 ## Sign In Page
+
 ![Sign In](https://user-images.githubusercontent.com/99132893/230254548-21bb2531-8f32-4c6f-8b28-5fff369b4d2e.jpg)
 
 ## Sign Up Page
+
 ![Sign up](https://user-images.githubusercontent.com/99132893/230254707-b0c524db-ac22-41f7-8e66-f53965d840c7.jpg)
 
 ## Home Page
+
 ![Home ](https://user-images.githubusercontent.com/99132893/230263599-aeea12ca-0965-4140-9e33-d4634b7797c8.jpg)
 
 ## Chat Between Two User
+
 ![Chat](https://user-images.githubusercontent.com/99132893/230262810-3696506e-92ad-474a-8893-de2df2b9b0ac.jpg)
 
 ## Profile Page
+
 ![Profile](https://user-images.githubusercontent.com/99132893/230262902-3a840b6b-b3d6-4471-93ae-db3b2c20d95b.jpg)
 
 ## 404 Page not found
+
 ![Page Not Found](https://user-images.githubusercontent.com/99132893/230263073-c13f2a87-149a-48b1-acee-a9a3b210d0ba.jpg)
 
+## Functionality
+#####   Assume you are a dummy logged in user.
+
+#####   Use a json file to load some dummy data in the project.
+
+#####   Search : conversations should be searchable by contact name.
+
+#####   Left sidebar:
+######                Show all the conversations created here
+######                Each conversation should have the contact name and some text of the last message in the chat
+
+#####   Create conversation button
+######                On clicking this open a pop up and load all the contacts (from the dummy data.json/js file).
+######                On clicking the contact should start a new conversation (if no conversation was previously started). Or open the existing conversation for that contact.
+
+#####   Right side view
+######                Show the current selected conversation messages
+######                Send a message in the conversation
+
+#####   Handle errors and success alerts and show appropriate Alert/Notification.
+
+#####   use react-router.
+
+#####   use react hooks.
+
+#####   Bonus feature: Make the redux data persistent such that after refresh, the messages and conversations are intact.
 
 # Getting Started with Create React App
 
