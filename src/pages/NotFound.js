@@ -23,7 +23,7 @@ const NotFound = () => {
           <Link to={"/"} className={Styles.yes}>
             YES
           </Link>
-          <Link to={"https://www.youtube.com/watch?v=G3AfIvJBcGo"}>NO</Link>
+          <Link to={"https://www.youtube.com/channel/UClCLLStmE41ejOJZoZI237Q"}>NO</Link>
         </div>
       </section>
     </div>
