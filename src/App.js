@@ -16,7 +16,7 @@ function App() {
   };
   return (
     <div className="App">
-      <BrowserRouter basename="/my-chat-app">
+      <BrowserRouter>
         <ToastContainer/>
         <Routes>
           <Route exact path="/">
