@@ -17,7 +17,6 @@ const Search = () => {
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
-  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const { currentUser } = useContext(AuthContext);
 
@@ -26,12 +25,16 @@ const Search = () => {
       collection(db, "users"),
       where("displayName", "==", userName)
     );
+   
+
     try {
       const querySnapshot = await getDocs(q);
+      console.log("Try ",querySnapshot);
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
       });
     } catch (err) {
+      console.log("error ",err);
       setErr(true);
     }
   };
@@ -49,8 +52,6 @@ const Search = () => {
 
     try {
       const res = await getDoc(doc(db, "chats", combineId));
-      console.log(res);
-
       if (!res.exists()) {
         //Create user chats collections
         await setDoc(doc(db, "chats", combineId), { messages: [] });
@@ -60,7 +61,7 @@ const Search = () => {
           [combineId + ".userInfo"]: {
             uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL ? user.photoURL : defaultURL,
+            photoURL: user.photoURL,
           },
           [combineId + ".date"]: serverTimestamp(),
         });
@@ -69,14 +70,12 @@ const Search = () => {
           [combineId + ".userInfo"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL ? currentUser.photoURL : defaultURL,
+            photoURL: currentUser.photoURL,
           },
           [combineId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err) {
-      setErr(true);
-    }
+    } catch (err) {}
     setUser(null);
     setUserName("");
   };
@@ -92,13 +91,10 @@ const Search = () => {
           value={userName}
         />
       </div>
-      {err && <span>User not found</span>}
+      {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handledSelectChat}>
-          <img
-            src={user.photoURL ? user.photoURL : defaultURL}
-            alt="user-chat"
-          />
+          <img src={user.photoURL} alt="user-chat" />
           <div className="userChatinfo">
             <span>{user.displayName}</span>
           </div>

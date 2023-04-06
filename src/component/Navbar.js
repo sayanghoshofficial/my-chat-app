@@ -10,7 +10,6 @@ import { ChatContext } from "../context/ChatContext";
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const clearSelectChat = (user) => {
     dispatch({ type: "NULL_USER", payload: user });
@@ -39,14 +38,17 @@ const Navbar = () => {
 
       <div className="user">
         <Link to={"/profile"}>
-          <img src={currentUser.photoURL? currentUser.photoURL:defaultURL} alt="user" />
+          <img
+            src={currentUser.photoURL}
+            alt="user"
+          />
         </Link>
 
         <Link to={"/profile"}>
           <span>{currentUser.displayName}</span>
         </Link>
 
-        <button  onClick={onClickSignOut}>
+        <button onClick={onClickSignOut}>
           <i className="fa-solid fa-right-from-bracket"></i>
         </button>
       </div>

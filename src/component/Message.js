@@ -5,12 +5,12 @@ import { ChatContext } from "../context/ChatContext";
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
   const ref = useRef();
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
+
   return (
     <div
       ref={ref}
@@ -21,11 +21,7 @@ const Message = ({ message }) => {
           src={
             message.senderId === currentUser.uid
               ? currentUser.photoURL
-                ? currentUser.photoURL
-                : defaultURL
               : data.user.photoURL
-              ? data.user.photoURL
-              : defaultURL
           }
           alt="user"
         />

@@ -5,7 +5,7 @@ import Messages from "./Messages";
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
-  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+  
 
   return (
     <div className="chat">
@@ -13,7 +13,7 @@ const Chat = () => {
         <span>
           {data.user ? (
             <img
-              src={data.user.photoURL ? data.user.photoURL : defaultURL}
+              src={data.user.photoURL}
               style={data.user.photoURL ? null : { display: "none" }}
             />
           ) : null}
