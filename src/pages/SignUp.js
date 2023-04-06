@@ -26,11 +26,13 @@ const SignUp = () => {
     if (password !== confirmPassword) {
       return toast.warn("Password and confirmPassword not matched!....", {
         position: "top-left",
+        theme:"colored"
       });
     }
     if (password.length < 6) {
       return toast.warn("Password will be at least 6 letter...", {
         position: "top-left",
+        theme:"colored"
       });
     }
     try {

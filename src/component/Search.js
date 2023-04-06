@@ -10,6 +10,8 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 
@@ -21,20 +23,33 @@ const Search = () => {
   const { currentUser } = useContext(AuthContext);
 
   const handledSearch = async () => {
+    if (userName === currentUser.displayName) {
+      setErr(true);
+      toast.warn("You can't add your self as Your friends", {
+        position: "top-left",
+        theme: "colored",
+      });
+      return;
+    }
+
     const q = query(
       collection(db, "users"),
       where("displayName", "==", userName)
     );
-   
 
     try {
       const querySnapshot = await getDocs(q);
-      console.log("Try ",querySnapshot);
+
+      if (querySnapshot.docChanges().length < 1) {
+        setErr(true);
+        return
+      }
+      setErr(false);
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
       });
     } catch (err) {
-      console.log("error ",err);
+      console.log("error ", err);
       setErr(true);
     }
   };
@@ -87,7 +102,7 @@ const Search = () => {
           type="text"
           placeholder="Find your friend..."
           onKeyDown={handleKey}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setUserName(e.target.value.trim())}
           value={userName}
         />
       </div>
