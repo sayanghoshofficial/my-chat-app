@@ -1,21 +1,23 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+import { ChatContext, NULL_USER } from "../context/ChatContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
+  // current user details from use context
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-  const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
+  // clear chat after logout
   const clearSelectChat = (user) => {
-    dispatch({ type: "NULL_USER", payload: user });
+    dispatch({ type: NULL_USER, payload: user });
   };
 
+  // logout function using firebase signOut method
   const onClickSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -38,11 +40,7 @@ const Profile = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <span className="logo">My Chat</span>
-        <img
-          className="profileImg"
-          src={currentUser.photoURL ? currentUser.photoURL : defaultURL}
-          alt="user"
-        />
+        <img className="profileImg" src={currentUser.photoURL} alt="user" />
         <h5>{currentUser.displayName}</h5>
         <h6>{currentUser.email}</h6>
         <button onClick={onClickSignOut}>

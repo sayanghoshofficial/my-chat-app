@@ -5,16 +5,20 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import { auth } from "../firebase";
-import { ChatContext } from "../context/ChatContext";
+import { ChatContext, NULL_USER } from "../context/ChatContext";
 
 const Navbar = () => {
+  // get current user using use context
   const { currentUser } = useContext(AuthContext);
+  // get user chat date by use context
   const { dispatch } = useContext(ChatContext);
 
+  // clear chat after sign out
   const clearSelectChat = (user) => {
-    dispatch({ type: "NULL_USER", payload: user });
+    dispatch({ type: NULL_USER, payload: user });
   };
 
+  // it handled the sign out from function
   const onClickSignOut = () => {
     signOut(auth)
       .then(() => {

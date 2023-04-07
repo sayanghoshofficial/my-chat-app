@@ -6,18 +6,22 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 const SignIn = () => {
+  // navigate for go to another page
   const navigate = useNavigate();
+  // show loading screen after clicking on login
   const [loading, setLoading] = useState(false);
 
+  // handled submit email and password
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     const email = e.target[0].value;
     const password = e.target[1].value;
 
+    // firebase function for sign in
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        // const user = userCredential.user;
         toast.success("Successfully LogIn!...", {
           position: "top-left",
           theme: "colored",
@@ -36,6 +40,7 @@ const SignIn = () => {
       });
   };
 
+  // show loading Screen
   if (loading) {
     return (
       <div className="loaderWapper">

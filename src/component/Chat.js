@@ -4,6 +4,7 @@ import Input from "./Input";
 import Messages from "./Messages";
 
 const Chat = () => {
+  // get chat data from chat context
   const { data } = useContext(ChatContext);
   
 

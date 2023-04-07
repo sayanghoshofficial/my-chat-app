@@ -16,12 +16,15 @@ import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 
 const Search = () => {
+  // use state for user name user and error
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
 
+  // get current user using use context
   const { currentUser } = useContext(AuthContext);
 
+  // this will handled search function
   const handledSearch = async () => {
     if (userName === currentUser.displayName) {
       setErr(true);
@@ -42,7 +45,7 @@ const Search = () => {
 
       if (querySnapshot.docChanges().length < 1) {
         setErr(true);
-        return
+        return;
       }
       setErr(false);
       querySnapshot.forEach((doc) => {
@@ -54,10 +57,12 @@ const Search = () => {
     }
   };
 
+  // after enter user details fetched
   const handleKey = (e) => {
     e.code === "Enter" && handledSearch();
   };
 
+  // this function will handled select chat function it will add as user friend
   const handledSelectChat = async () => {
     //check whether the group(chats in firestore) is exists or not, if not
     const combineId =

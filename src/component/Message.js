@@ -3,10 +3,14 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 
 const Message = ({ message }) => {
+  // get current user using use context
   const { currentUser } = useContext(AuthContext);
+  // get user chat date by use context
   const { data } = useContext(ChatContext);
+  // use ref for message shown function 
   const ref = useRef();
 
+  // when message send every time it smoothly scrool the screen
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);

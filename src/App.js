@@ -5,9 +5,12 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 
+
 function App() {
+  // current user details through useContext
   const { currentUser } = useContext(AuthContext);
 
+  // protected route for not logged users 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to={"/login"} />;

@@ -8,13 +8,17 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [err, setErr] = useState(false);
+  // use state function for image submit button and loading screen
   const [img, setImg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
+  // navigate for page movement
   const navigate = useNavigate();
+  // default url for user if no avatar uploaded
   const defaultURL = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
+
+  // handled submit for  for new user sign in
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
@@ -26,19 +30,21 @@ const SignUp = () => {
     if (password !== confirmPassword) {
       return toast.warn("Password and confirmPassword not matched!....", {
         position: "top-left",
-        theme:"colored"
+        theme: "colored",
       });
     }
     if (password.length < 6) {
       return toast.warn("Password will be at least 6 letter...", {
         position: "top-left",
-        theme:"colored"
+        theme: "colored",
       });
     }
     try {
       setLoading(true);
+      // firebase new user create function
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
+      // if user set his avatar this function will handled this
       if (img) {
         const date = new Date().getTime();
         const storageRef = ref(storage, `${displayName + date}`);
@@ -72,13 +78,13 @@ const SignUp = () => {
                 position: "top-left",
                 theme: "colored",
               });
-              setErr(true);
+
               setLoading(false);
             }
             // Signed in
           });
         });
-      }else{
+      } else {
         try {
           //Update profile
           await updateProfile(res.user, {
@@ -106,7 +112,7 @@ const SignUp = () => {
             position: "top-left",
             theme: "colored",
           });
-          setErr(true);
+
           setLoading(false);
         }
       }
@@ -115,10 +121,12 @@ const SignUp = () => {
         position: "top-left",
         theme: "colored",
       });
-      setErr(true);
+
       setLoading(false);
     }
   };
+
+  // during process of sign in this function will appear the as loading screen
   if (loading) {
     return (
       <div className="loaderWapper">
