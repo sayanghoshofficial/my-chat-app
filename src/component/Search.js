@@ -107,7 +107,7 @@ const Search = () => {
           type="text"
           placeholder="Find your friend..."
           onKeyDown={handleKey}
-          onChange={(e) => setUserName(e.target.value.trim())}
+          onChange={(e) => setUserName(e.target.value)}
           value={userName}
         />
       </div>
