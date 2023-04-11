@@ -9,12 +9,14 @@ const SignIn = () => {
   // navigate for go to another page
   const navigate = useNavigate();
   // show loading screen after clicking on login
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   // handled submit email and password
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);/
+    setSubmit(true)
     const email = e.target[0].value;
     const password = e.target[1].value;
 
@@ -28,7 +30,8 @@ const SignIn = () => {
         });
 
         navigate("/");
-        setLoading(false);
+        setSubmit(false);
+        // setLoading(false);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -36,18 +39,19 @@ const SignIn = () => {
           position: "top-left",
           theme: "colored",
         });
-        setLoading(false);
+        // setLoading(false);
+        setSubmit(false);
       });
   };
 
   // show loading Screen
-  if (loading) {
-    return (
-      <div className="loaderWapper">
-        <div className="loader"></div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loaderWapper">
+  //       <div className="loader"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="formContainer">
@@ -58,7 +62,7 @@ const SignIn = () => {
           <input type="email" placeholder="Email..." />
           <input type="password" placeholder="Password..." />
 
-          <button>Sign in</button>
+          <button disabled={submit}>{submit ? "Signingin" : "Signin"}</button>
         </form>
         <p>
           You don't have an account? <Link to="/signup">Signup</Link>

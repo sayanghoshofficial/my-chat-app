@@ -10,7 +10,7 @@ import { useNavigate, Link } from "react-router-dom";
 const SignUp = () => {
   // use state function for image submit button and loading screen
   const [img, setImg] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   // navigate for page movement
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const SignUp = () => {
       });
     }
     try {
-      setLoading(true);
+      // setLoading(true);
       // firebase new user create function
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
@@ -72,14 +72,14 @@ const SignUp = () => {
                 theme: "colored",
               });
               navigate("/");
-              setLoading(false);
+              // setLoading(false);
             } catch (err) {
               toast.error(err, {
                 position: "top-left",
                 theme: "colored",
               });
 
-              setLoading(false);
+              // setLoading(false);
             }
             // Signed in
           });
@@ -106,14 +106,14 @@ const SignUp = () => {
             theme: "colored",
           });
           navigate("/");
-          setLoading(false);
+          // setLoading(false);
         } catch (err) {
           toast.error(err, {
             position: "top-left",
             theme: "colored",
           });
 
-          setLoading(false);
+          // setLoading(false);
         }
       }
     } catch (err) {
@@ -122,18 +122,18 @@ const SignUp = () => {
         theme: "colored",
       });
 
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   // during process of sign in this function will appear the as loading screen
-  if (loading) {
-    return (
-      <div className="loaderWapper">
-        <div className="loader"></div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loaderWapper">
+  //       <div className="loader"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="formContainer">
