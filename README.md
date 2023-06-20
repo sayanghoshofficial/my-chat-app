@@ -1,4 +1,4 @@
-# Create React Calculator App
+# Create React Chat App
 
 This is the Hosting Page [My Chat App](https://sayanghoshofficial.github.io/my-chat-app)
 
