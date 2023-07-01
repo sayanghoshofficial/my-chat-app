@@ -13,11 +13,14 @@ import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { toast } from "react-toastify";
+import Picker, { EmojiClickData, Emoji, SkinTones } from "emoji-picker-react";
 
 const Input = () => {
   // useState for text and img send to the user
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
 
   // get current user using use context
   const { currentUser } = useContext(AuthContext);
@@ -78,7 +81,15 @@ const Input = () => {
     setText("");
     setImg(null);
   };
-  
+
+  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+    const { unified } = emojiData;
+    const emoji = String.fromCodePoint(`0x${unified}`);
+
+    setText(text + emoji);
+    setShowEmojiPicker(false);
+  };
+
   return (
     <div className="input">
       <input
@@ -87,6 +98,28 @@ const Input = () => {
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
+      {/* Emoji picker */}
+      {selectedEmoji ? (
+        // <div className="selected-emoji">
+        <Emoji
+          emoji={selectedEmoji}
+          size={22}
+          native={true}
+          onClick={handleEmojiClick}
+        />
+      ) : // </div>
+      null}
+
+      {showEmojiPicker && (
+        <Picker
+          onEmojiClick={handleEmojiClick}
+          disableAutoFocus={true}
+          groupNames={{ smileys_people: "PEOPLE" }}
+          native={true}
+          SkinTone={SkinTones.NONE}
+        />
+      )}
+
       <div className="send">
         <input
           type="file"
@@ -94,13 +127,25 @@ const Input = () => {
           id="file"
           onChange={(e) => setImg(e.target.files[0])}
         />
-        <i className="fa-solid fa-paperclip" htmlFor="file"></i>
+
         <label htmlFor="file">
           <img
             src="https://cdn-icons-png.flaticon.com/512/6631/6631821.png"
             alt="img-logo"
           />
         </label>
+
+        {/* Emoji picker toggle button */}
+        <button
+          className="emojiButton"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        >
+          {showEmojiPicker ? (
+            <i className="fa-solid fa-face-smile"></i>
+          ) : (
+            <i className="fa-regular fa-face-smile"></i>
+          )}
+        </button>
         <button onClick={handledSendMessage}>Send</button>
       </div>
     </div>
