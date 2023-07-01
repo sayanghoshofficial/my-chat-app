@@ -81,8 +81,13 @@ const Input = () => {
     setText("");
     setImg(null);
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handledSendMessage();
+    }
+  };
 
-  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+  const handleEmojiClick = (emojiData, event) => {
     const { unified } = emojiData;
     const emoji = String.fromCodePoint(`0x${unified}`);
 
@@ -96,6 +101,7 @@ const Input = () => {
         type="text"
         placeholder="Type something...."
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
         value={text}
       />
       {/* Emoji picker */}

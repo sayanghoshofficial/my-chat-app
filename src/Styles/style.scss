@@ -352,19 +352,8 @@
           position: absolute;
           height: 350px;
           width: 30% !important;
-          bottom: 160px;
-          // @include tablet{
-          //   width: 270px !important;
-          // }
-          // @include mobile{
-          //   width: 200px !important;
-          // }
+          bottom: 160px;       
         }
-        // .EmojiPickerReact{
-        //   position: relative;
-        //   height: 500px;
-        //   width: 500px;
-        // }
         .send {
           display: flex;
           align-items: center;
