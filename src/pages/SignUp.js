@@ -141,13 +141,14 @@ const SignUp = () => {
         <span className="logo">My Chat</span>
         <span className="title">Sign Up</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Your Name..." />
-          <input type="email" placeholder="Email..." />
+          <input type="text" placeholder="Your Name..." required/>
+          <input type="email" placeholder="Email..." required/>
           <input
             type="password"
             placeholder="Password...(use at least 6 letter)"
+            required
           />
-          <input type="password" placeholder="Confirm Password..." />
+          <input type="password" placeholder="Confirm Password..." required/>
           <input
             type="file"
             id="file"

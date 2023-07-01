@@ -59,8 +59,8 @@ const SignIn = () => {
         <span className="logo">My Chat</span>
         <span className="title">Sign In</span>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email..." />
-          <input type="password" placeholder="Password..." />
+          <input type="email" placeholder="Email..." required/>
+          <input type="password" placeholder="Password..." required/>
 
           <button disabled={submit}>{submit ? "Signingin" : "Signin"}</button>
         </form>
