@@ -12,11 +12,16 @@ This is the Hosting Page [My Chat App](https://sayanghoshofficial.github.io/my-c
 
 ## Home Page
 
-![Home ](https://user-images.githubusercontent.com/99132893/230263599-aeea12ca-0965-4140-9e33-d4634b7797c8.jpg)
+![Home Page](https://github.com/sayanghoshofficial/my-chat-app/assets/99132893/b6f75428-b173-44d7-966c-9255729505a9)
 
 ## Chat Between Two User
 
-![Chat](https://user-images.githubusercontent.com/99132893/230262810-3696506e-92ad-474a-8893-de2df2b9b0ac.jpg)
+![Chat between two user](https://github.com/sayanghoshofficial/my-chat-app/assets/99132893/33dc5043-8a46-42b1-adea-4526650f40db)
+
+## Send Emojis to your friends
+
+![emojies](https://github.com/sayanghoshofficial/my-chat-app/assets/99132893/3d3aed9b-69cb-42cb-ac79-629f0e3495af)
+
 
 ## Profile Page
 
