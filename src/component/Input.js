@@ -82,7 +82,7 @@ const Input = () => {
     setImg(null);
   };
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handledSendMessage();
     }
   };
@@ -146,11 +146,13 @@ const Input = () => {
           className="emojiButton"
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         >
-          {showEmojiPicker ? (
-            <i className="fa-solid fa-face-smile"></i>
-          ) : (
-            <i className="fa-regular fa-face-smile"></i>
-          )}
+          <i
+            className={
+              showEmojiPicker
+                ? "fa-solid fa-face-smile"
+                : "fa-regular fa-face-smile"
+            }
+          ></i>
         </button>
         <button onClick={handledSendMessage}>Send</button>
       </div>
